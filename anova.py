@@ -82,6 +82,18 @@ def show_sc_entre(srt):
 		x += sc_entre(list, total)
 	return x
 
+def operar_sc_entre(srt):
+	x = 0
+	total = []
+	abcdario = "%s" % (srt)
+	for i in abcdario: #aqui se juntan todas las listas es algo como "a+b+c+d+e+...."
+		letra = eval(i)
+		total += letra
+	for item in abcdario:
+		list = eval(item)
+		x += sc_entre(list, total)
+	return x
+
 def sc_dentro(lista):
 	suma = 0
 	i = 0
@@ -104,6 +116,49 @@ def show_sc_dentro(srt):
 		print "SC-dentro-(%s) es: %s" % (item, y)
 		x += sc_dentro(list)
 	return x
+
+# sumar todo sc-dentro-
+def operar_sc_dentro(srt):
+	x = 0
+	abcdario = "%s" % (srt)
+	for item in abcdario:
+		list = eval(item)
+		x += sc_dentro(list)
+	return x
+
+#grado de libertad -entre-
+def gl_sc_entre(srt):
+	i = 0
+	gl = 0
+	abcdario = "%s" % (srt)
+	for item in abcdario:
+		i = i + 1
+	gl = i -1
+	return gl
+
+#grado de libertad -dentro-
+def gl_sc_dentro(srt):
+	abcdario = "%s" % (srt)
+	i = 0
+	total = []
+	for item in abcdario: #aqui se juntan todas las listas es algo como "a+b+c+d+e+...."
+		letra = eval(item)
+		total += letra
+		i = i + 1
+	n = len(total)
+	gl = n - i
+	return gl
+
+#cuadrado medio y razon de variacion
+def cuadrado_medio(srt):
+	cm1 = Decimal(str(operar_sc_entre(srt)/gl_sc_entre(srt))).quantize(Decimal('1.0000'),rounding=ROUND_HALF_UP)
+	cm2 = Decimal(str(operar_sc_dentro(srt)/gl_sc_dentro(srt))).quantize(Decimal('1.0000'),rounding=ROUND_HALF_UP)
+	return cm1, cm2
+
+def razon_variacion(srt):
+	cm1, cm2 = cuadrado_medio(srt)
+	rv = Decimal(str(cm1/cm2)).quantize(Decimal('1.0000'),rounding=ROUND_HALF_UP)
+	return rv
 
 a = [726.4, 732.8, 889.6]
 b = [1291.2, 905.6]
@@ -145,3 +200,14 @@ SC-entre- Total es: %s
 print """-----------------------------
 SC-dentro- Total es: %s
 """ % show_sc_dentro("abcde")
+
+#mostrando grados de libertad sc-entre-
+print """K - 1 = %s
+N - K = %s""" % (gl_sc_entre("abcde"), gl_sc_dentro("abcde"))
+
+print """
+CM-entre- es: %s
+CM-dentro- es: %s
+"""% cuadrado_medio("abcde")
+
+print """Razon de variacion es: %s""" % razon_variacion("abcde")
