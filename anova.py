@@ -11,6 +11,22 @@ def media(lista):
 	prom = sumatoria(lista)/len(lista)
 	return prom
 
+#mostrando todo media
+def show_media(srt):
+	abcdario = "%s" % (srt)
+	total = []
+	for item in abcdario:
+		list = eval(item)
+		media = sum(list)/len(list)
+		media = Decimal(str(media)).quantize(Decimal('1.00'),rounding=ROUND_HALF_UP)
+		print "Media en (%s) es: %s" % (item, media)
+	for i in abcdario: #aqui se juntan todas las listas es algo como "a+b+c+d+e+...."
+		letra = eval(i)
+		total += letra
+	mediatotal = sum(total)/len(total)
+	mediatotal = Decimal(str(mediatotal)).quantize(Decimal('1.00'),rounding=ROUND_HALF_UP)
+	return mediatotal
+
 def sc_entre(lista, total):
 	var1 = Decimal(str(media(lista))).quantize(Decimal('1.00'),rounding=ROUND_HALF_UP)
 	var2 = Decimal(str(media(total))).quantize(Decimal('1.00'),rounding=ROUND_HALF_UP)
@@ -23,13 +39,13 @@ def show_sc_entre(srt):
 	y = 0
 	total = []
 	abcdario = "%s" % (srt)
-	for i in abcdario:
+	for i in abcdario: #aqui se juntan todas las listas es algo como "a+b+c+d+e+...."
 		letra = eval(i)
 		total += letra
 	for item in abcdario:
 		list = eval(item)
 		y = sc_entre(list, total)
-		print "SC-dentro-(%s) es: %s" % (item, y)
+		print "SC-entre-(%s) es: %s" % (item, y)
 		x += sc_entre(list, total)
 	return x
 
@@ -99,17 +115,10 @@ En E es %s
 La Sumatoria Total es %s
 """ % (sumatoria(a), sumatoria(b), sumatoria(c), sumatoria(d), sumatoria(e), sumatoria(a+b+c+d+e))
 
-#mostrando promedios
-print """Calculando media:
-
-Media en A es %.2f
-Media en B es %.2f
-Media en C es %.2f
-Media en D es %.2f
-Media en E es %.2f
-------------------------
-Media del Total es %.2f
-""" % (media(a), media(b), media(c), media(d), media(e), media(a+b+c+d+e))
+#mostrando media
+print """-----------------------------
+Media Total es: %s
+""" % show_media("abcde")
 
 #mostrando SC-entre-
 print """-----------------------------
