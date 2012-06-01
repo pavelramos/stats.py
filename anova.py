@@ -1,14 +1,47 @@
 from decimal import *
 #http://docs.python.org/library/decimal.html
 
-def sumatoria(lista):
-	suma = 0
-	for itemlista in lista:
-		suma += itemlista
-	return suma
+#mostrando listas
+def show_listas(srt):
+	i = 0
+	abcdario = "%s" % (srt)
+	for item in abcdario:
+		i = i + 1
+		list = eval(item)
+		print "%s = %s" % (item, list)
+	return i
+
+#mostrando items (n) para cada lista
+def show_muestra(srt):
+	abcdario = "%s" % (srt)
+	total = []
+	for item in abcdario:
+		list = eval(item)
+		n = len(list)
+		print "En (%s) hay %s items" % (item, n)
+	for i in abcdario: #aqui se juntan todas las listas es algo como "a+b+c+d+e+...."
+		letra = eval(i)
+		total += letra
+	ntotal = len(total)
+	return ntotal
+
+#mostrando todo sumatoria
+def show_sumatoria(srt):
+	abcdario = "%s" % (srt)
+	total = []
+	for item in abcdario:
+		list = eval(item)
+		suma = Decimal(str(sum(list))).quantize(Decimal('1.00'),rounding=ROUND_HALF_UP)
+		print "Sumatoria en (%s) es: %s" % (item, suma)
+	for i in abcdario: #aqui se juntan todas las listas es algo como "a+b+c+d+e+...."
+		letra = eval(i)
+		total += letra
+	sumatotal = sum(total)
+	return sumatotal
+
 
 def media(lista):
-	prom = sumatoria(lista)/len(lista)
+	prom = sum(lista)/len(lista)
 	return prom
 
 #mostrando todo media
@@ -84,36 +117,19 @@ Analisis de varianza (ANOVA)
 """
 
 #mostrando listas
-print "A = " + str(a)
-print "B = " + str(b)
-print "C = " + str(c)
-print "D = " + str(d)
-print "E = " + str(e)
+print """-----------------------------
+En total hay %s grupos por analizar
+""" % show_listas("abcde")
 
 #mostrando n
-print """
-Caculando n:
-
-En A hay %s items.
-En B hay %s items.
-En C hay %s items.
-En D hay %s items.
-En E hay %s items.
-----------------------------
-En Total hay %s items.
-""" % (len(a), len(b), len(c), len(d), len(e), len(a+b+c+d+e))
+print """-----------------------------
+En total hay %s items
+""" % show_muestra("abcde")
 
 #mostrando sumatoria
-print """Calculando sumatoria:
-
-En A es %s
-En B es %s
-En C es %s
-En D es %s
-En E es %s
------------------
-La Sumatoria Total es %s
-""" % (sumatoria(a), sumatoria(b), sumatoria(c), sumatoria(d), sumatoria(e), sumatoria(a+b+c+d+e))
+print """-----------------------------
+Sumatoria total es %s
+""" % show_sumatoria("abcde")
 
 #mostrando media
 print """-----------------------------
