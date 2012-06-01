@@ -17,6 +17,45 @@ def sc_entre(lista, total):
 	var3 = Decimal(str(len(lista)*(var2-var1)**2)).quantize(Decimal('1.0000'),rounding=ROUND_HALF_UP)
 	return var3
 
+# sumar todo sc-entre-
+def show_sc_entre(srt):
+	x = 0
+	y = 0
+	total = []
+	abcdario = "%s" % (srt)
+	for i in abcdario:
+		letra = eval(i)
+		total += letra
+	for item in abcdario:
+		list = eval(item)
+		y = sc_entre(list, total)
+		print "SC-dentro-(%s) es: %s" % (item, y)
+		x += sc_entre(list, total)
+	return x
+
+def sc_dentro(lista):
+	suma = 0
+	i = 0
+	for item in lista:
+		var1 = Decimal(str(lista[i])).quantize(Decimal('1.00'),rounding=ROUND_HALF_UP)
+		i = i+1
+		var2 = Decimal(str(media(lista))).quantize(Decimal('1.00'),rounding=ROUND_HALF_UP)
+		var3 = (var1 - var2)**2
+		suma += var3
+	return suma
+
+# sumar todo sc-dentro-
+def show_sc_dentro(srt):
+	x = 0
+	y = 0
+	abcdario = "%s" % (srt)
+	for item in abcdario:
+		list = eval(item)
+		y = sc_dentro(list)
+		print "SC-dentro-(%s) es: %s" % (item, y)
+		x += sc_dentro(list)
+	return x
+
 a = [726.4, 732.8, 889.6]
 b = [1291.2, 905.6]
 c = [863, 876.7]
@@ -33,7 +72,7 @@ print "A = " + str(a)
 print "B = " + str(b)
 print "C = " + str(c)
 print "D = " + str(d)
-print "F = " + str(e)
+print "E = " + str(e)
 
 #mostrando n
 print """
@@ -73,15 +112,11 @@ Media del Total es %.2f
 """ % (media(a), media(b), media(c), media(d), media(e), media(a+b+c+d+e))
 
 #mostrando SC-entre-
-print """Calculando SC-entre-:
+print """-----------------------------
+SC-entre- Total es: %s
+""" % show_sc_entre("abcde")
 
-SC-entre-(A) es: %.4f
-SC-entre-(B) es: %.4f
-SC-entre-(C) es: %.4f
-SC-entre-(D) es: %.4f
-SC-entre-(E) es: %.4f
---------------------------
-Total SC-entre- es %.4f
-""" % (sc_entre(a,a+b+c+d+e),sc_entre(b,a+b+c+d+e),sc_entre(c,a+b+c+d+e),sc_entre(d,a+b+c+d+e),sc_entre(e,a+b+c+d+e), sc_entre(a,a+b+c+d+e) + sc_entre(b,a+b+c+d+e) + sc_entre(c,a+b+c+d+e) + sc_entre(d,a+b+c+d+e) + sc_entre(e,a+b+c+d+e))
-
-
+#mostrando SC-dentro-
+print """-----------------------------
+SC-dentro- Total es: %s
+""" % show_sc_dentro("abcde")
