@@ -1,213 +1,84 @@
 from decimal import *
 #http://docs.python.org/library/decimal.html
 
-#mostrando listas
-def show_listas(srt):
-	i = 0
-	abcdario = "%s" % (srt)
-	for item in abcdario:
-		i = i + 1
-		list = eval(item)
-		print "%s = %s" % (item, list)
-	return i
-
-#mostrando items (n) para cada lista
-def show_muestra(srt):
-	abcdario = "%s" % (srt)
-	total = []
-	for item in abcdario:
-		list = eval(item)
-		n = len(list)
-		print "En (%s) hay %s items" % (item, n)
-	for i in abcdario: #aqui se juntan todas las listas es algo como "a+b+c+d+e+...."
-		letra = eval(i)
-		total += letra
-	ntotal = len(total)
-	return ntotal
-
-#mostrando todo sumatoria
-def show_sumatoria(srt):
-	abcdario = "%s" % (srt)
-	total = []
-	for item in abcdario:
-		list = eval(item)
-		suma = Decimal(str(sum(list))).quantize(Decimal('1.00'),rounding=ROUND_HALF_UP)
-		print "Sumatoria en (%s) es: %s" % (item, suma)
-	for i in abcdario: #aqui se juntan todas las listas es algo como "a+b+c+d+e+...."
-		letra = eval(i)
-		total += letra
-	sumatotal = sum(total)
-	return sumatotal
-
-
-def media(lista):
-	prom = sum(lista)/len(lista)
-	return prom
-
-#mostrando todo media
-def show_media(srt):
-	abcdario = "%s" % (srt)
-	total = []
-	for item in abcdario:
-		list = eval(item)
-		media = sum(list)/len(list)
-		media = Decimal(str(media)).quantize(Decimal('1.00'),rounding=ROUND_HALF_UP)
-		print "Media en (%s) es: %s" % (item, media)
-	for i in abcdario: #aqui se juntan todas las listas es algo como "a+b+c+d+e+...."
-		letra = eval(i)
-		total += letra
-	mediatotal = sum(total)/len(total)
-	mediatotal = Decimal(str(mediatotal)).quantize(Decimal('1.00'),rounding=ROUND_HALF_UP)
-	return mediatotal
-
-def sc_entre(lista, total):
-	var1 = Decimal(str(media(lista))).quantize(Decimal('1.00'),rounding=ROUND_HALF_UP)
-	var2 = Decimal(str(media(total))).quantize(Decimal('1.00'),rounding=ROUND_HALF_UP)
-	var3 = Decimal(str(len(lista)*(var2-var1)**2)).quantize(Decimal('1.0000'),rounding=ROUND_HALF_UP)
-	return var3
-
-# sumar todo sc-entre-
-def show_sc_entre(srt):
-	x = 0
-	y = 0
-	total = []
-	abcdario = "%s" % (srt)
-	for i in abcdario: #aqui se juntan todas las listas es algo como "a+b+c+d+e+...."
-		letra = eval(i)
-		total += letra
-	for item in abcdario:
-		list = eval(item)
-		y = sc_entre(list, total)
-		print "SC-entre-(%s) es: %s" % (item, y)
-		x += sc_entre(list, total)
-	return x
-
-def operar_sc_entre(srt):
-	x = 0
-	total = []
-	abcdario = "%s" % (srt)
-	for i in abcdario: #aqui se juntan todas las listas es algo como "a+b+c+d+e+...."
-		letra = eval(i)
-		total += letra
-	for item in abcdario:
-		list = eval(item)
-		x += sc_entre(list, total)
-	return x
-
-def sc_dentro(lista):
-	suma = 0
-	i = 0
-	for item in lista:
-		var1 = Decimal(str(lista[i])).quantize(Decimal('1.00'),rounding=ROUND_HALF_UP)
-		i = i+1
-		var2 = Decimal(str(media(lista))).quantize(Decimal('1.00'),rounding=ROUND_HALF_UP)
-		var3 = (var1 - var2)**2
-		suma += var3
-	return suma
-
-# sumar todo sc-dentro-
-def show_sc_dentro(srt):
-	x = 0
-	y = 0
-	abcdario = "%s" % (srt)
-	for item in abcdario:
-		list = eval(item)
-		y = sc_dentro(list)
-		print "SC-dentro-(%s) es: %s" % (item, y)
-		x += sc_dentro(list)
-	return x
-
-# sumar todo sc-dentro-
-def operar_sc_dentro(srt):
-	x = 0
-	abcdario = "%s" % (srt)
-	for item in abcdario:
-		list = eval(item)
-		x += sc_dentro(list)
-	return x
-
-#grado de libertad -entre-
-def gl_sc_entre(srt):
-	i = 0
-	gl = 0
-	abcdario = "%s" % (srt)
-	for item in abcdario:
-		i = i + 1
-	gl = i -1
-	return gl
-
-#grado de libertad -dentro-
-def gl_sc_dentro(srt):
-	abcdario = "%s" % (srt)
-	i = 0
-	total = []
-	for item in abcdario: #aqui se juntan todas las listas es algo como "a+b+c+d+e+...."
-		letra = eval(item)
-		total += letra
-		i = i + 1
-	n = len(total)
-	gl = n - i
-	return gl
-
-#cuadrado medio y razon de variacion
-def cuadrado_medio(srt):
-	cm1 = Decimal(str(operar_sc_entre(srt)/gl_sc_entre(srt))).quantize(Decimal('1.0000'),rounding=ROUND_HALF_UP)
-	cm2 = Decimal(str(operar_sc_dentro(srt)/gl_sc_dentro(srt))).quantize(Decimal('1.0000'),rounding=ROUND_HALF_UP)
-	return cm1, cm2
-
-def razon_variacion(srt):
-	cm1, cm2 = cuadrado_medio(srt)
-	rv = Decimal(str(cm1/cm2)).quantize(Decimal('1.0000'),rounding=ROUND_HALF_UP)
-	return rv
-
-a = [726.4, 732.8, 889.6]
-b = [1291.2, 905.6]
-c = [863, 876.7]
-d = [995.2, 984.3]
-e = [1193.6, 1272, 1457.6]
-
-#Bienvenida
-print """Prueba F
-Analisis de varianza (ANOVA)
+print """
+DISENO POR BLOQUES COMPLETAMENTE ALEATORIZADO
+Tabla para el Analisis de Varianza (ANOVA)
+http://github.com/pavelramos/estadistica.py/anova.py
+Escrito en Python por: @pavelramos (c)2012
+---------------------------------------------------------
 """
 
-#mostrando listas
-print """-----------------------------
-En total hay %s grupos por analizar
-""" % show_listas("abcde")
+k = int(raw_input("Ingrese numero de columnas:"))
+l = []
+cont1 = 0
+n = 0 #N total de datos
+suma = 0
+for i in xrange(k):
+	l2 = []
+	cont1 = cont1 + 1
+	var = int(raw_input("Ingrese cantidad de datos para columna N-" + str(cont1) + ":"))
+	for i in xrange(var):
+		n = n + 1
+		x = float(raw_input("Ingrese dato para columna N-" + str(cont1) + ":"))
+		l2.append(x)
+	print l2
+	l.append(l2)
+	suma += sum(l2)
 
-#mostrando n
-print """-----------------------------
-En total hay %s items
-""" % show_muestra("abcde")
+def media(list):
+	media = sum(list)/len(list)
+	return media
 
-#mostrando sumatoria
-print """-----------------------------
-Sumatoria total es %s
-""" % show_sumatoria("abcde")
+print """\nCalculando...\n"""
 
-#mostrando media
-print """-----------------------------
-Media Total es: %s
-""" % show_media("abcde")
+bar = 0
+cont2 = 0
+for i in xrange(k):
+	cont2 += 1
+	print """Columna-%s: n= %s, sumatoria= %s, media= %.2f""" % (cont2, len(l[bar]), sum(l[bar]), media(l[bar]))
+	bar += 1
+print """--------------------------\nTotal: N= %s, sumatoria= %s, media= %.2f\n""" % (n, suma, suma/n)
 
-#mostrando SC-entre-
-print """-----------------------------
-SC-entre- Total es: %s
-""" % show_sc_entre("abcde")
+bar2 = 0
+var4 = 0
+for i in xrange(k):
+	var1 = Decimal(str(media(l[bar2]))).quantize(Decimal('1.00'),rounding=ROUND_HALF_UP)
+	var2 = Decimal(str(suma/n)).quantize(Decimal('1.00'),rounding=ROUND_HALF_UP)
+	var3 = Decimal(str(len(l[bar2])*(var1-var2)**2)).quantize(Decimal('1.0000'),rounding=ROUND_HALF_UP)
+	var4 += var3
+	bar2 += 1
+	print """SCentre-%s : %.4f""" % (bar2, var3)
+print """-------------------------\nSCentre total: %.4f""" % var4
 
-#mostrando SC-dentro-
-print """-----------------------------
-SC-dentro- Total es: %s
-""" % show_sc_dentro("abcde")
+print ""
+bar3 = 0
+var8 = 0
+for i in xrange(k):
+	bar4 = 0
+	var9 = 0
+	for i in xrange(int(len(l[bar3]))):
+		var5 = Decimal(str(l[bar3][bar4])).quantize(Decimal('1.00'),rounding=ROUND_HALF_UP)
+		var6 = Decimal(str(media(l[bar3]))).quantize(Decimal('1.00'),rounding=ROUND_HALF_UP)
+		var7 = Decimal(str((var5-var6)**2)).quantize(Decimal('1.0000'),rounding=ROUND_HALF_UP)
+		bar4 += 1
+		print """(%s - %s)^2 = %.4f""" % (var5, var6, var7)
+		var8 += var7
+		var9 += var7
+	bar3 += 1
+	print """-------------------------\nSCdentro-%s : %.4f\n""" % (bar3, var9) #imprime suma dentro de cada columna
+print """SCdentro total: %.4f\n""" % var8 #imprime la suma total de todos los valores de var9
 
-#mostrando grados de libertad sc-entre-
-print """K - 1 = %s
-N - K = %s""" % (gl_sc_entre("abcde"), gl_sc_dentro("abcde"))
+print """==============================================\n"""
 
-print """
-CM-entre- es: %s
-CM-dentro- es: %s
-"""% cuadrado_medio("abcde")
+gl1 = k - 1
+gl2 = n - k
+print """Hallando Grados de Libertad:\nK - 1 = %s\nN - K = %s\n""" % (gl1, gl2)
 
-print """Razon de variacion es: %s""" % razon_variacion("abcde")
+cm1 = Decimal(str(var4/gl1)).quantize(Decimal('1.0000'),rounding=ROUND_HALF_UP)
+cm2 = Decimal(str(var8/gl2)).quantize(Decimal('1.0000'),rounding=ROUND_HALF_UP)
+print """Hallando Cuadrado Medio:\nCMentre = %.4f\nCMdentro = %.4f\n""" % (cm1, cm2)
+
+rv = cm1/cm2
+rv = Decimal(str(rv)).quantize(Decimal('1.0000'),rounding=ROUND_HALF_UP)
+print """Hallando Razon de Variacion:\nRV = CMentre/CMdentro = %.4f""" % rv
